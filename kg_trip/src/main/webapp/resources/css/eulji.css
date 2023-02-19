@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+/* 검색 */
+.searchBox{
+	border: 1px solid #d3d3d3;
+	padding: 8px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.searchBtn{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 1px solid #d3d3d3;
+	padding: 6px;
+}
+
+/* 을지 게시판 list css - eTbl */
+.eTbl{
+	width: 100%;
+	border-collapse: collapse;
+}
+th, td{
+	border-bottom: 1px solid black;	
+	padding : 15px;
+	font-size: 15px;
+}
+th{
+	background-color: #beebe2;
+}
+
+#actionForm{
+	width: 100%;	
+	
+}
+.tdCenter{
+	text-align: center;
+}
+
+/* register.jsp */
+/* input[type="text"], textarea { */
+.regInput{
+	width : 100%;
+	border: 1px solid darkgray;
+	padding: 8px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.inputFileBtn{
+	padding: 6px 20px;
+  background-color:#41d4b8;
+  border-radius: 4px;
+  color: white;
+  width: 20px;
+  cursor: pointer;
+}
+.deleteFileBtn{
+	padding: 6px 10px;
+  border: solid 1px #41d4b8;
+  border-radius: 4px;
+  color : #666d75;
+  cursor: pointer;
+}
+
+.registerTbl{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.registerTbl th, td{
+	border-bottom: 1px solid black;	
+	padding : 15px;
+	font-size: 15px;
+}
+
+/* register.jsp */
+.eTblView{
+	width: 100%;
+	border-collapse: collapse;
+}
+.eTblView th, td{
+	border-bottom: 1px solid black;	
+	padding : 15px;
+	font-size: 15px;
+	min-width: 70px;
+}
+.eTblView th{
+	font-size: 17px;
+}

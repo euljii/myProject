@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+firstStartup=false
+org.eclipse.team.svn.ui.crashrecovery.relocated.RelocationChoicesPanel.height=99
+org.eclipse.team.svn.ui.crashrecovery.relocated.RelocationChoicesPanel.width=470
+org.eclipse.team.svn.ui.panel.callback.AskTrustSSLServerPanel.height=440
+org.eclipse.team.svn.ui.panel.callback.AskTrustSSLServerPanel.width=530
+org.eclipse.team.svn.ui.panel.callback.PromptCredentialsPanel.height=295
+org.eclipse.team.svn.ui.panel.callback.PromptCredentialsPanel.width=470
+org.eclipse.team.svn.ui.panel.reporting.ErrorCancelPanel.height=214
+org.eclipse.team.svn.ui.panel.reporting.ErrorCancelPanel.width=664
+preference.repository.repositoryBrowser=false

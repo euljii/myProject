@@ -1,0 +1,116 @@
+package com.sunrise.card.controller;
+
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sunrise.card.service.CardService;
+import com.sunrise.card.vo.BillVO;
+import com.sunrise.card.vo.CommCodeDtlVO;
+import com.sunrise.card.vo.CustVO;
+import com.sunrise.card.vo.RcvApplVO;
+
+@Controller
+public class CardController {
+	@Autowired
+	CardService cService;
+
+	@RequestMapping(value = "/card", method = RequestMethod.GET)
+	public String card(Locale locale, Model model) {
+		
+		return "home";
+	}
+	
+	@RequestMapping(value = "/cardApply", method = RequestMethod.GET)
+	public String cardApply(Locale locale, Model model) {
+		System.out.println("컨트롤러여요.!");
+		
+		// selectBox - 신청구분 list
+		List<CommCodeDtlVO> applClasList = cService.applClasList(model);
+		model.addAttribute("applClasList", applClasList);
+
+		// selectBox - 카드 브랜드 list
+		List<CommCodeDtlVO> brdList = cService.brdList(model);
+		model.addAttribute("brdList", brdList);
+		
+		// selectBox - 결제일자 list
+		List<CommCodeDtlVO> stlDdList = cService.stlDdList(model);
+		model.addAttribute("stlDdList", stlDdList);
+
+		// selectBox - 결제방법 list
+		List<CommCodeDtlVO> stlMtdList = cService.stlMtdList(model);
+		model.addAttribute("stlMtdList", stlMtdList);
+		
+		// selectBox - 결제은행 list
+		List<CommCodeDtlVO> bnkCdList = cService.bnkCdList(model);
+		model.addAttribute("bnkCdList", bnkCdList);
+		
+		// selectBox - 결제은행 list
+		List<CommCodeDtlVO> stmtSndMtdList = cService.stmtSndMtdList(model);
+		model.addAttribute("stmtSndMtdList", stmtSndMtdList);
+		
+		return "cardApply";
+	}
+	
+	@RequestMapping(value = "/crdApply", method = RequestMethod.POST)
+	public String crdApply(RcvApplVO rvo, CustVO cvo, BillVO bvo) {
+		
+		System.out.println("Post.cardApply 타나요 ? ");
+		cService.rcvApplInsert(rvo);
+		/*System.out.println("insert 전 ssn" + cvo.getSSN());
+		
+		cService.custInsert(cvo);
+		System.out.println("insert 후 ssn" + cvo.getSSN());
+		System.out.println("insert 레쓰고 하나요 ?");
+		// bvo.setCrd_NO 해줘서 고객번호 넣어줘서 들고오게 하기!!
+		bvo.setCUST_NO(cvo.getCUST_NO());
+		cService.billInsert(bvo);*/
+		return "redirect:/card" ;
+	}
+	
+	@RequestMapping(value = "/applyList", method = RequestMethod.GET)
+	public String applyList(Locale locale, Model model) {
+		
+		return "applyList";
+	}
+	
+	@RequestMapping(value = "/custList", method = RequestMethod.GET)
+	public String custList(Locale locale, Model model) {
+		
+		return "custList";
+	}
+	
+	
+	@RequestMapping(value = "/applList", method = RequestMethod.GET)
+	public String applList(Locale locale, Model model) {
+		
+	
+		
+		return "applList";
+	}
+	
+	
+	// 조회 btn
+	@RequestMapping(value = "/selectBtn", method = RequestMethod.POST)
+	@ResponseBody
+	public RcvApplVO selectBtn(@RequestParam("SSN") String SSN, @RequestParam("RCV_D") String RCV_D, @RequestParam("RCV_SEQ_NO") String RCV_SEQ_NO) {
+		RcvApplVO rvo = new RcvApplVO();
+		rvo.setSSN(SSN);
+		System.out.println(SSN);
+		System.out.println("타니?");
+		RcvApplVO selectBtnList = cService.selectBtn(rvo);
+		System.out.println("타니?2");
+		System.out.println(selectBtnList.getENG_NM());
+		return selectBtnList;
+	}
+	
+	
+	
+}

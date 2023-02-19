@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Board">
+
+	<select id="boardList" resultType="com.sunrise.board.vo.BoardVO">
+		select * from board
+	</select>
+
+	<select id="totalChkMapper" resultType="int">
+		select count(*) from
+		board
+	</select>
+
+	<select id="boardInsert" resultType="com.sunrise.board.vo.BoardVO">
+		INSERT INTO BOARD
+		(BOARD_TYPE,BOARD_NUM,BOARD_TITLE,BOARD_COMMENT,CREATOR,CREATE_TIME,MODIFIER,MODIFIED_TIME)
+		VALUES
+		(#{BOARD_TYPE},(SELECT NVL(TO_NUMBER(MAX(BOARD_NUM)+1),0)
+		FROM BOARD
+		WHERE BOARD_TYPE = #{BOARD_TYPE}), #{BOARD_TITLE}, #{BOARD_COMMENT},
+		'SYSTEM', TO_CHAR(SYSDATE),'SYSTEM', TO_CHAR(SYSDATE))
+	</select>
+
+	<select id="comCodeList" resultType="com.sunrise.board.vo.BoardVO">
+		SELECT *
+		FROM COM_CODE
+		WHERE CODE_TYPE = 'MENU'
+	</select>
+	
+	<!-- 0823 -->
+	
+	<!-- 총 글 수 -->
+	<select id="boardCount" resultType="int">
+		 select count(*) from board
+	</select>
+	
+	<!-- phone 공통코드 -->
+	<select id="selectPhoneCode" resultType="com.sunrise.board.vo.ComCodeVO">
+		select code_name from com_code where code_type = 'phone'
+	</select>
+	
+	<!-- 회원가입 add -->
+	<insert id="join" parameterType="com.sunrise.board.vo.UserInfoVO">
+		insert into USER_INFO (user_id, user_pw, user_name, USER_PHONE1, USER_PHONE2,
+	        USER_PHONE3, USER_ADDR1, USER_ADDR2, USER_COMPANY,  CREATE_TIME) 
+		values (#{USER_ID}, #{USER_PW}, #{USER_NAME}, #{USER_PHONE1}, #{USER_PHONE2}, #{USER_PHONE3}, #{USER_ADDR1}, #{USER_ADDR2},
+	    #{USER_COMPANY},  sysdate)
+	
+	</insert>
+	
+	<!-- 로그인시 비번 들고오기 -->
+	<!-- <select id="checkPw" parameterType="String" resultType="String">
+		SELECT USER_PW FROM USER_INFO where USER_ID = #{USER_ID, jdbcType=VARCHAR}
+	</select> -->
+	<select id="Board.checkPw" parameterType="String" resultType="String">
+		select user_pw from USER_INFO where user_id = #{user_id}
+	</select>
+	
+	<!-- User 정보 들고오기 -->
+	<select id="getUser" resultType="com.sunrise.board.vo.UserInfoVO">
+		select * from USER_INFO where USER_ID = #{USER_ID} and USER_PW = #{USER_PW}
+	</select>
+	
+	
+	<!-- 경준코딩 -->
+	<select id="Board.idCheck" parameterType="String" resultType="int">
+		select count(*) from user_info where user_id = #{id}
+	</select>
+	<select id="Board.pwCheck" resultType="int" parameterType="com.sunrise.board.vo.UserInfoVO">
+		select count(*) from user_info where USER_ID = #{USER_ID} and USER_PW = #{USER_PW}
+	</select>
+</mapper>

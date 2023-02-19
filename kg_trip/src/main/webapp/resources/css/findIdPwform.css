@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+.publicFind button{
+	width: 130px;
+	height: 30px;
+}
+.corpFind button{
+	width: 130px;
+	height: 30px;
+}
+.joinBox{
+	display: flex; 
+	justify-content: space-evenly; 
+	padding-top: 30px; 
+	padding-bottom: 30px; 
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	/* border: 1px solid #e9e9e9; */
+}
+.publicFind{
+	text-align: center;
+	width: 700px;
+	height: 150px;
+	margin-right: 8px;
+}
+.corpFind{
+	text-align: center;
+	width: 700px;
+	height: 150px;
+	margin-left: 8px;	
+}
+.buttonB, .buttonC {
+	border: 1px solid #e9e9e9;
+	width: 50%;
+	border-radius: 2px;
+	font-size: 18px;
+}
+.buttonB:hover, .buttonC:hover{
+	background: #41d4b8;
+	color: white;
+	cursor: pointer;
+}
+.buttons{
+	border: 1px solid #e9e9e9;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 2px;	
+	margin-bottom: 30px;
+}
+.buttons button{
+	margin-left: 10px;
+	background: white;
+	border: 1px solid #e9e9e9;
+	border-radius: 2px;
+	cursor: pointer;	
+}
+.buttons p {
+	margin-left: 10px;
+	font-size: 13px;
+	padding-top: 5px;
+}
+/* .buttonA{
+		width:70px;
+		height:30px;
+		background-color: #41d4b8;
+		color: white;
+		border: 0px;
+		border-radius: 5px;
+	}
+	
+	.buttonB{
+		width: 130px;
+		height: 30px;
+		background-color: #41d4b8;
+		color: white;
+		border: 0px;
+		border-radius: 5px;
+		font-size: 17px;
+	}
+	
+	.buttonB:hover{
+		background-color: #33d0b2;
+	}
+	
+	.buttonC{
+		width: 130px;
+		height: 30px;
+		line-height: 50px;
+		background-color: white;
+		color: #41d4b8;
+		border: 1px solid gray;
+		border-radius: 5px;
+		font-size: 17px;
+		text-align: center;
+	}
+	
+	.buttonC:hover{
+		box-shadow: 1px 1px 10px #ddd;
+	}
+	 */

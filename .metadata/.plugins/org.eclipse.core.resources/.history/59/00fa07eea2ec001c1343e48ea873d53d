@@ -1,0 +1,127 @@
+package org.joonzis.mapper;
+
+import java.util.List;
+
+import org.joonzis.domain.BoardVO;
+import org.joonzis.domain.Criteria;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+public class BoardMapperTests {
+	// 루트컨텍스트 맨 밑에 스캔베이스패키지 잡은 거로. 이거 갖다 쓸 수 있다는 소리..
+	
+	@Setter(onMethod_ = @Autowired)	// 컨테이너에 있는 객체를 롬복 이용해서 세터로 들고오겠다
+	BoardMapper mapper; 			// 갖고 올 객체
+
+	// cri 만들어서 던져줘!!
+	/*
+		@Test
+		public void testPaging() {
+			Criteria cri = new Criteria();
+			cri.setPageNum(3);
+			cri.setAmount(10);
+			// 3페이지부터 10개 보겠다
+			
+			List<BoardVO> list = mapper.getListWithPaging(cri);
+			for(BoardVO vo : list) { 
+				log.info(vo);		// 정보전달의 목적 
+			}
+		}
+		*/
+		
+		/*
+	 	@Test 
+	 	public void testGetList() { 
+	 	// mapper.getList(); // List가 넘어옴. > 포문 돌면서 안에 있는 값 찍어볼 수 있을 것! 
+	  	// mapper.getList().forEach(board -> log.info(board));
+	  	// 책에 있는 거. 근데 잘 모르니까.. 딴 거 쓰기
+	  
+	  	List<BoardVO> list = mapper.getList();
+	  	for(BoardVO vo : list) { 
+	  		log.info(vo);		// 정보전달의 목적 
+	  		// System.out.println(vo); 
+	  		// log.info랑 log.warn& log.error 차이 : 정보전달/경고/에러 이건 꼭 고쳐줘! 
+	  		} 
+	  	}
+		*/
+	
+	/*
+	쿼리)
+	<insert id="insert">
+		insert into tbl_board (bno, title, content, writer)
+			values(seq_board.nextval, #{title}, #{content}, #{writer})
+	</insert>
+	보드매퍼)
+	public void insert(BoardVO board);
+	
+	@Test
+	public void testInsert() {
+		BoardVO vo = new BoardVO();
+		vo.setTitle("테에스트~제목~_새로 작성하는 제목");
+		vo.setContent("새로 작성하는 내용");
+		vo.setWriter("새 작성자");
+		
+		mapper.insert(vo);						// vo 던져주기
+		log.info(vo);
+	}
+	
+
+	
+	// public BoardVO read(long bno);
+	@Test
+	public void testRead() {				
+		long bno = 6;
+		// vo.setBno(bno);
+		
+		BoardVO vo = mapper.read(bno);
+		log.info(vo);
+		System.out.println(vo);
+		
+	}
+	 */
+	
+	/*
+	@Test
+	public void testDelete() {				// 성공!!
+		BoardVO vo = new BoardVO();
+		long bno = 1;
+		int result = mapper.delete(bno);
+		
+		log.info(result);
+		System.out.println(result);
+		System.out.println(vo);
+	}
+	*/ 
+	
+	/*
+	@Test
+	public void testUpdate() {				// 성공!!
+		long bno = 6;
+		BoardVO vo = new BoardVO();
+		vo.setTitle("테에스트~제목!");
+		vo.setContent("새로 작성하는 내용!");
+		vo.setWriter("새 작성자!");
+		vo.setBno(bno);
+		
+		mapper.update(vo);
+		log.info(vo);
+	}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="kg_trip"/>
+<aop-project name="chap99_holiday"/>
+<aop-project name="Fworld"/>
+<aop-project name="sample"/>
+<aop-project name="goodDay"/>
+<aop-project name="W2_card"/>
+<aop-project name="W1_board"/>
+</aop-reference-model>

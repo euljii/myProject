@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="NewWizardAction">
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.wst.html.ui.internal.wizard.NewHTMLWizard"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.wst.web.ui"/>
+		</list>
+	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="11"/>
+		<item key="DIALOG_Y_ORIGIN" value="8"/>
+	</section>
+	<section name="ImportExportAction">
+		<item key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID" value="org.eclipse.ui.wizards.import.ExternalProject"/>
+		<item key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID" value="org.eclipse.ui.wizards.export.ZipFile"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item key="dialogHeight" value="-1"/>
+		<item key="dialogWidth" value="-1"/>
+		<list key="orderedElements">
+		</list>
+		<list key="orderedProviders">
+		</list>
+		<list key="textEntries">
+		</list>
+		<list key="textArray">
+		</list>
+	</section>
+	<section name="FileSystemExportWizard">
+		<item key="WizardFileSystemResourceExportPage1.STORE_OVERWRITE_EXISTING_FILES_ID" value="false"/>
+		<item key="WizardFileSystemResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="false"/>
+		<item key="WizardFileSystemResourceExportPage1.STORE_RESOLVE_LINKED_RESOURCES_ID" value="false"/>
+		<list key="WizardFileSystemResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\byun_\Desktop\파이널\취합용"/>
+		</list>
+	</section>
+	<section name="ZipFileExportWizard">
+		<item key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="true"/>
+		<item key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID" value="true"/>
+		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\byun_\Desktop\zheld\해오름\W2_Crd\0906(insert완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0804 을지 백업(비밀글 완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0803 을지 백업(정리완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0803 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0731 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0729 을지 백업(css완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0729 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0728 을지 백업(myPage페이징완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0728 을지 백업(list O,페이징x).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0728 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0722 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0718 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0718 을지 백업(핏백전&amp;답글insert만해결).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0715 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0714 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0708 을지 백업 취합용.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0708 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0707 을지 백업.zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0706 을지 백업(fq crud&amp;fq_cat완).zip"/>
+			<item value="C:\Users\byun_\Desktop\파이널\셀프백업\0704 을지 백업(검색의페이징처리완).zip"/>
+		</list>
+	</section>
+</section>

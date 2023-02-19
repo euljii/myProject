@@ -1,0 +1,36 @@
+package com.sunrise.card.dao;
+
+import java.util.List;
+
+import com.sunrise.card.vo.BillVO;
+import com.sunrise.card.vo.CommCodeDtlVO;
+import com.sunrise.card.vo.CrdVO;
+import com.sunrise.card.vo.CustVO;
+import com.sunrise.card.vo.RcvApplVO;
+
+public interface CardDao {
+//	List<CardVO> cardList();
+	
+	// 공통코드 셀렉트박스 리스트
+	List<CommCodeDtlVO> applClasList();
+	List<CommCodeDtlVO> brdList();
+	List<CommCodeDtlVO> stlDdList();
+	List<CommCodeDtlVO> stlMtdList();
+	List<CommCodeDtlVO> bnkCdList();
+	List<CommCodeDtlVO> stmtSndMtdList();
+	
+	// crud
+	public int rcvApplInsert(RcvApplVO rvo);
+	public int custInsert(CustVO cvo);
+	
+	// custNo 들고오기
+	public CustVO getCvo (CustVO cvo);
+	public int billInsert(BillVO bvo);
+	
+	// crdNo 들고오기
+	public RcvApplVO getRvo (RcvApplVO rvo);
+	public int crdInsert(CrdVO cdvo);
+
+	// 조회 btn
+	RcvApplVO selectBtn(RcvApplVO rvo);	
+}

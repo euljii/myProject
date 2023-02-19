@@ -1,0 +1,95 @@
+package com.sunrise.card.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import com.sunrise.card.dao.CardDao;
+import com.sunrise.card.vo.BillVO;
+import com.sunrise.card.vo.CommCodeDtlVO;
+import com.sunrise.card.vo.CrdVO;
+import com.sunrise.card.vo.CustVO;
+import com.sunrise.card.vo.RcvApplVO;
+
+@Service("cService")
+public class CardServiceImpl implements CardService {
+	
+	@Autowired
+	private CardDao cDao;
+
+	@Override
+	public List<CommCodeDtlVO> applClasList(Model model) {
+		List<CommCodeDtlVO> applClasList = cDao.applClasList();
+		return applClasList;
+	}
+
+	@Override
+	public List<CommCodeDtlVO> brdList(Model model) {
+		List<CommCodeDtlVO> brdList = cDao.brdList();
+		return brdList;
+	}
+
+	@Override
+	public List<CommCodeDtlVO> stlDdList(Model model) {
+		List<CommCodeDtlVO> stlDdList = cDao.stlDdList();
+		return stlDdList;
+	}
+
+	@Override
+	public List<CommCodeDtlVO> stlMtdList(Model model) {
+		List<CommCodeDtlVO> stlMtdList = cDao.stlMtdList();
+		return stlMtdList;
+	}
+
+	@Override
+	public List<CommCodeDtlVO> bnkCdList(Model model) {
+		List<CommCodeDtlVO> bnkCdList = cDao.bnkCdList();
+		return bnkCdList;
+	}
+
+	@Override
+	public List<CommCodeDtlVO> stmtSndMtdList(Model model) {
+		List<CommCodeDtlVO> stmtSndMtdList = cDao.stmtSndMtdList();
+		return stmtSndMtdList;
+	}
+
+	@Override
+	public int rcvApplInsert(RcvApplVO rvo) {
+		return cDao.rcvApplInsert(rvo);
+	}
+
+	@Override
+	public int custInsert(CustVO cvo) {
+		return cDao.custInsert(cvo);
+	}
+
+	@Override
+	public int billInsert(BillVO bvo) {
+		return cDao.billInsert(bvo);
+	}
+
+	@Override
+	public CustVO getCvo(CustVO cvo) {
+		return cDao.getCvo(cvo);
+	}
+
+	@Override
+	public RcvApplVO getRvo(RcvApplVO rvo) {
+		return cDao.getRvo(rvo);
+	}
+
+	@Override
+	public int crdInsert(CrdVO cdvo) {
+		return cDao.crdInsert(cdvo);
+	} 
+	
+	@Override
+	public RcvApplVO selectBtn(RcvApplVO rvo) {
+		return cDao.selectBtn(rvo);
+	}
+	
+	
+	
+}

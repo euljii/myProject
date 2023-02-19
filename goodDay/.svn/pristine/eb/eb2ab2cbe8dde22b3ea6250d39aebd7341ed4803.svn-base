@@ -1,0 +1,148 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>입회신청 페이지</h1>
+	<form id="frm_crd" action="crdApply" method="post">
+	
+		<div>	<!-- 조회 -->
+<!-- 		주민번호 <input type="text" name="ssn">
+			접수일자 <input type="text" name="rcv_d">
+			접수 일련번호 <input type="text" name="rcv_seq_no">
+			
+			<button id="crdCheck">조회</button> -->
+			<table id="tbl_crd">
+				<tr>
+					<td>주민번호</td>
+					<td><input type="text" name="SSN"></td>
+					<td>접수일자</td>
+					<td><input type="text" name="RCV_D"></td>
+					<td>접수 일련번호</td>
+					<td><input type="text" name="RCV_SEQ_NO">
+						<button id="crdCheck">조회</button>
+						</td>
+				</tr>
+				<tr>
+					<td colspan="6">　</td>
+				</tr>
+				<tr>
+					<td>신청일자</td>	<!-- ej 달력 형태로 넣을 것 -->
+					<td><input type="text" name="APPL_D"></td>
+					<td>신청구분</td>
+					<td><select name="APPL_CLAS"> <!-- list -->
+							<c:forEach var="applClasList" items="${applClasList}">
+								<option value="${applClasList.CODE}">${applClasList.CODE_NM}</option>
+							</c:forEach>
+						
+						</select>
+					</td>
+					<td>브랜드</td>
+					<td><select name="BRD"> <!-- list -->
+							<c:forEach var="brdList" items="${brdList}">
+								<option value="${brdList.CODE}">${brdList.CODE_NM}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>성명(한글)</td>
+					<td><input type="text" name="HG_NM"></td>
+					<td>성명(영문)</td>
+					<td><input type="text" name="ENG_NM"></td>
+					<td>생년월일</td>
+					<td><input type="text" name="BIRTH_D"></td>
+				</tr>
+				<tr>
+					<td>결제일자</td>
+					<td><select name="STL_DD"> <!-- list -->
+							<c:forEach var="stlDdList" items="${stlDdList}">
+								<option value="${stlDdList.CODE}">${stlDdList.CODE_NM}</option>
+							</c:forEach>
+						
+						</select>
+					</td>
+					<td>결제방법</td>
+					<td><select name="STL_MTD"> <!-- list -->
+							<c:forEach var="stlMtdList" items="${stlMtdList}">
+								<option value="${stlMtdList.CODE}">${stlMtdList.CODE_NM}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td>결제은행</td>
+					<td><select name="BNK_CD"> <!-- list -->
+							<c:forEach var="bnkCdList" items="${bnkCdList}">
+								<option value="${bnkCdList.CODE}">${bnkCdList.CODE_NM}</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>결제계좌</td>
+					<td colspan="5">
+						 <input type="text" name="STL_ACT">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">청구서 발송방법
+						<select name="STMT_SND_MTD"> <!-- list -->
+							<c:forEach var="stmtSndMtdList" items="${stmtSndMtdList}">
+								<option value="${stmtSndMtdList.CODE}">${stmtSndMtdList.CODE_NM}</option>
+							</c:forEach>
+						</select>
+						
+					<td>우편번호</td>
+					<td colspan="3">
+						<input type="text" name="BILLADR_ZIP">
+						<input type="text" name="BILLADR_ADR1">
+						<input type="text" name="BILLADR_ADR2"><!-- 상세주소 -->
+					</td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><input type="email" name="EMAIL_ADR"></td>
+					<td>핸드폰 번호</td>
+					<td><input type="text" name="HDP_NO"></td>
+					<td>비밀번호</td>
+					<td><input type="password" name="SCRT_NO"></td>
+				</tr>
+				<tr>
+					<td>불능 구분</td>
+<!-- 				ej) 불능처리 ~ 나중에 readonly로 바꿀 것 -->
+					<td><input type="text" name="IMPSB_CLAS" ></td>
+					<td>불능 사유명</td>
+					<td colspan="3"><input type="text" name="IMPSB_CD"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	
+	<br><br>
+	
+	<button id="btn_apply">등록</button>
+	<button>수정</button>
+	<input type="reset" value="초기화">
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		
+		// var frm_crd = $("#frm_crd");
+		
+		$("#btn_apply").click(function() {
+			
+			$("#frm_crd").submit();
+			
+		});
+		
+		
+	});
+</script>
+</html>

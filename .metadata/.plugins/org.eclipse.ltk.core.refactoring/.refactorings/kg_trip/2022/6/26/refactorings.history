@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;kg_trip/src/main/webapp/WEB-INF/views/oneByOne&apos; to &apos;qna&apos;" description="Rename resource &apos;oneByOne&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/WEB-INF/views/oneByOne" name="qna" stamp="1655620714348" updateReferences="true"/>
+</session>

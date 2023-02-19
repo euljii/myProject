@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="org.kg.mapper.B_PublicMemberMapper">
+  
+	<select id="getPmemberList" resultType="org.kg.domain.B_PublicMemberVO">
+		select * from b_publicMember_tbl
+	</select>
+	
+	<insert id="insertPublic">
+		insert into b_publicMember_tbl(m_idx, m_id, m_pw, m_nickname, m_name, m_gender,m_email,m_phone,m_birth,m_regdate,m_auth,m_connect,m_img)
+		values (b_publicMember_SEQ.nextval, #{m_id},#{m_pw},#{m_nickname}, #{m_name},#{m_gender},#{m_email},#{m_phone},#{m_birth}
+				,sysdate,'public',0,'clover.png')
+	</insert>
+  
+	<select id="checkIdPublic" parameterType="String" resultType="int">
+		select count(*) from b_publicmember_tbl where m_id = #{m_id}
+	</select>
+	
+	<select id="checkNicknamePublic" parameterType="String" resultType="int">
+		select count(*) from b_publicmember_tbl where m_nickname = #{m_nickname}
+	</select>
+	
+	<select id="checkEmailPublic" parameterType="String" resultType="int">
+		select count(*) from b_publicmember_tbl where m_email = #{m_email}
+	</select>
+	<select id="checkPhonePublic" parameterType="String" resultType="int">
+		select count(*) from b_publicmember_tbl where m_phone = #{m_phone}
+	</select>
+  
+	<select id="getPmember" resultType="org.kg.domain.B_PublicMemberVO">
+		select * from b_publicMember_tbl where m_id= #{m_id} and m_pw=#{m_pw}
+	</select>
+	
+	<delete id="deletePublic">
+		delete b_publicMember_tbl where m_idx = #{m_idx}
+	</delete>
+	
+	<update id="updateAuthP">
+		update b_publicmember_tbl SET m_auth = 'admin' where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateNickname">
+		update b_publicmember_tbl set m_nickname = #{m_nickname} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateIntro">
+		update b_publicmember_tbl set m_intro = #{m_intro} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateBirth">
+		update b_publicmember_tbl set m_birth = #{m_birth} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateGender">
+		update b_publicmember_tbl set m_gender = #{m_gender} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateEmail">
+		update b_publicmember_tbl set m_email = #{m_email} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updatePhone">
+		update b_publicmember_tbl set m_phone = #{m_phone} where m_idx = #{m_idx}
+	</update>
+	
+	<update id="updateImg">
+		update b_publicmember_tbl set m_img = #{m_img} where m_idx = #{m_idx}
+	</update>
+	
+	<select id="loginpassword" parameterType="String" resultType="String">
+		SELECT m_pw FROM b_publicmember_tbl where m_id = #{m_id}
+	</select>
+	
+	<update id="updatepPw">
+		update b_publicmember_tbl set m_pw = #{m_pw} where m_id = #{m_id}
+	</update>
+	
+	<select id="findPIdEmail" resultType="org.kg.domain.B_PublicMemberVO">
+		SELECT * FROM b_publicmember_tbl where m_name = #{m_name} and m_email=#{m_email}
+	</select>
+	
+	<select id="findPIdPhone" resultType="org.kg.domain.B_PublicMemberVO">
+		SELECT * FROM b_publicmember_tbl where m_name = #{m_name} and m_phone=#{m_phone}
+	</select>
+	
+	<update id="findPPw" >
+		update b_publicmember_tbl set m_pw = #{m_pw} where m_email = #{m_email} and m_id = #{m_id} and m_name = #{m_name}
+	</update>
+	
+	<select id="findPPwCheck" resultType="int">
+		select count(*) from b_publicmember_tbl where m_email = #{m_email} and m_id = #{m_id} and m_name = #{m_name}
+	</select>
+	
+	<select id="countP" resultType="org.kg.domain.B_PublicMemberVO">
+		select to_char(m_regdate,'mm') as m_regmonth, count(*) as m_joinsum from b_publicmember_tbl group by to_char(m_regdate,'mm') order by m_regmonth asc
+	</select>
+	
+	<select id="getPmemberListPaging" resultType="org.kg.domain.B_PublicMemberVO">
+	<![CDATA[
+	select * from (
+		select /*+index_desc(tbl_board pk_board) */
+		rownum rn, m_idx, m_id, m_nickname, m_name, m_gender, m_email,m_auth,m_phone
+		from ( select * from b_publicmember_tbl where m_auth = 'public' and 
+	]]>
+			<if test="searchType == 'm_id'">m_id like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == 'm_nickname'">m_nickname like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == 'm_name'">m_name like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == null or searchType == '' ">1=1</if>
+	<![CDATA[
+		order by m_idx desc)where rownum <= #{nowPage} * #{cntPerPage} )
+		where rn > (#{nowPage}-1) * #{cntPerPage}
+	]]>
+	</select>
+	
+	<!-- count_전체 개수 갖고오기 -->
+	<select id="getPmemberTotalCount" resultType="int">
+      select count(*) as total from b_publicmember_tbl
+      where <if test="searchType == 'm_id'">m_id like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == 'm_nickname'">m_nickname like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == 'm_name'">m_name like '%'||#{searchName}||'%'</if>
+     		<if test="searchType == null or searchType == '' ">1=1</if>
+	</select>
+  
+  </mapper>

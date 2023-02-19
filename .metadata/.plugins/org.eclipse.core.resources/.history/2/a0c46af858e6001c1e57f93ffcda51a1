@@ -1,0 +1,355 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="../include/header.jsp"%>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">게시글 화면</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">게시글 화면</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="form-group">
+					<label>글 번호</label> <input class="form-control" name="bno"
+						value='<c:out value="${board.bno }"/>' readonly="readonly">
+				</div>
+				<div class="form-group">
+					<label>글 제목</label> <input class="form-control" name="title"
+						value='<c:out value="${board.title }"/>' readonly="readonly">
+				</div>
+				<div class="form-group">
+					<label>글 내용</label>
+					<textarea class="form-control" name="content" rows="3"
+						readonly="readonly"><c:out value="${board.content }" /></textarea>
+					<!-- readonly 수정X. 읽기만 가능.  -->
+				</div>
+				<div class="form-group">
+					<label>작성자</label> <input class="form-control" name="writer"
+						value='<c:out value="${board.writer }"/>' readonly="readonly">
+				</div>
+				<button data-oper="modify" class="btn btn-primary">수정</button>
+				<button data-oper="list" class="btn btn-warning">목록</button>
+
+				<form action="/board/modify" method="get" id="operForm">
+					<!-- 특정 페이지에서 어떤 글 들어갔다가 다시 목록으로 눌렀을 때 들어갔던 페이지 그대로  뜨게! -->
+					<input type="hidden" id="bno" name="bno"
+						value='<c:out value="${board.bno }"/>' /> <input type="hidden"
+						name="pageNum" value='<c:out value="${cri.pageNum}"/>' /> <input
+						type="hidden" name="amount" value='<c:out value="${cri.amount}"/>' />
+				</form>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class='row'>
+	<div class="col-lg-12">
+		<!-- /.panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> 댓글
+				<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">댓글
+					달기</button>
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<ul class="chat">
+					<!-- start reply -->
+					<!-- <li class="left clearfix" data-rno='12'>
+						<div>
+							<div class="header">
+								<strong class="primary-font">user00</strong> <small
+									class="pull-right text-muted">2018-01-01 13:13</small>
+							</div>
+							<p>Good job!</p>
+						</div>
+					</li> -->
+					<!-- end reply -->
+				</ul>
+				<!-- ./ end ul -->
+			</div>
+			<!-- /.panel .chat-panel -->
+		</div>
+	</div>
+	<!-- ./end row -->
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<!-- 클래스가 modal과 fade인 애 -->
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ari-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">새 게시글 등록</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>댓글</label> <input class="form-control" name='reply'
+						value='New Reply!!!!'>
+				</div>
+				<div class="form-group">
+					<label>작성자</label> <input class="form-control" name='replyer'
+						value='replyer'>
+				</div>
+				<div class="form-group">
+					<label>등록 날짜</label> <input class="form-control" name='replyDate'
+						value=''>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
+				<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
+				<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
+				<button id='modalCloseBtn' type="button" class="btn btn-default">취소</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript" src="/resources/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var operForm = $("#operForm");
+
+		// modify
+		// button인데 type이 modify인 것. []에 속성 찾아서 쓸 수 있는 것-> 클릭이벤트나 온 넣을 수 있음
+		$("button[data-oper='modify']").click(function(e) {
+			operForm.attr("action", "/board/modify").submit(); // action을 보드 모디파이에 작성한 후 submit
+		});
+
+		// list
+		$("button[data-oper='list']").click(function(e) {
+			// list에는 bno 딸려오면 안되는데. 이렇게 하면 bno가 딸려와. -> 리스트 갈 때만 bno 지워줄 거 
+			operForm.find("#bno").remove(); //id가 bno인 거 찾아서 삭제하는 함수
+
+			operForm.attr("action", "/board/list").submit(); // action을 보드 모디파이에 작성한 후 submit
+		});
+	});
+</script>
+<script type="text/javascript">
+	console.log("======================");
+	console.log("JS TEST");
+
+	// 모달 창 관련 스크립트
+	var modal = $(".modal");
+	// 클래스명이 modal인 애를 들고 오겠다.   
+	var modalInputReply = modal.find("input[name='reply']");
+	// 사용자가 입력한 reply값 들고 오겠다.
+	var modalInputReplyer = modal.find("input[name='replyer']");
+	var modalInputReplyDate = modal.find("input[name='replyDate']");
+
+	// reply.js랑 연결
+	var modalModBtn = $("#modalModBtn");
+	var modalRemoveBtn = $("#modalRemoveBtn");
+	var modalRegisterBtn = $("#modalRegisterBtn");
+	
+	$(function() {
+
+		var bnoValue = '<c:out value="${board.bno }"/>';
+		var replyUL = $(".chat"); // document는 js, .chat은 제이쿼리 문법
+		// replyUL로 클래스명이 chat이라는 UL태그 선언. 
+
+		showList(1); // page 1을 매개변수로 던지고 , { , page : page }에서 두 페이지 중 오른쪽 페이지에 담아서 왼쪽에 던진다는 거..
+		function showList(page) {
+			replyService.getList({
+				bno : bnoValue,
+				page : page || 1},
+				
+			function(list) {
+			// {bno:bnoValue}
+
+				var str = '';
+
+				if (list == null || list.length == 0) {		// 댓글 리스트가 없으면
+					replyUL.html(""); 
+					return ; 								// 함수 종료
+				} else {									// 댓글 리스트가 있으면
+				for (var i = 0; i < list.length; i++) {
+
+					str += '<li class = "left clearfix" data-rno = "'+list[i].rno+'">';
+					// data-rno 값인 애들 들고 올 거. + 고정값 아닌 애들을 +로 연결!
+					str += '<div>';
+					str += '<div class = "header">';
+					str += '<strong class = "primary-font">'
+							+ list[i].replyer + '</strong>';
+					str += '<small class = "pull-right text-muted">'
+							+ list[i].replyDate
+							+ '</small>';
+					str += '</div>';
+					str += '<p>' + list[i].reply + '</p>';
+					str += '</div>';
+					str += '</li>';
+				}
+				replyUL.html(str);
+				
+				// 클릭이벤트 태우기
+				// li 눌렀을 때 1 모달창 띄우고 2 rno 값 들고오기
+				$("li").on("click", function(e) {
+					 var rnoValue = $(this).data("rno");		// rno값 들고오기!
+					// 수정 삭제 버튼 빼고 다 숨겨
+				 	modalModBtn.show(); 		// 수정 버튼 숨기기
+					modalRemoveBtn.show(); 		// 삭제 버튼 숨기기
+					modalRegisterBtn.hide(); 	// 등록 버튼 보이기
+					modalInputReplyDate.closest("div").hide(); // 등록 날짜 입력 창 숨기기
+					// modal.find("input").val(""); // 입력 창 비우기
+					alert(rnoValue);
+					
+					replyService.get(rnoValue, function(test) {	// 댓글 눌렀을 때 해당 내용 뜨게
+						console.log(test);
+						modalInputReply.val(test.reply);
+						modalInputReplyer.val(test.replyer);
+					});
+				 	
+					$(".modal").modal("show"); // 모달 창 보이기
+					
+					// 삭제 버튼 누르면 
+					$("#modalRemoveBtn").on("click", function(e) {
+					 	replyService.remove(rnoValue, function(result) {
+							alert(result);
+							$(".modal").modal("hide"); // 모달 창 숨기기
+							showList(1);
+					 	});
+					 }); 
+										
+					// 수정 버튼 누르면
+					$("#modalModBtn").on("click", function(e) {
+					 	var reply = {
+			 				rno : rnoValue, 
+							reply : modalInputReply.val()
+							};
+					 	
+					 	replyService.update(reply, function(result) {
+					 		// console.log(test2);
+							alert(result);
+							$(".modal").modal("hide"); // 모달 창 숨기기
+							showList(1);
+					 	});
+					 });
+					});
+				}
+			})
+		}
+
+		// 댓글 등록 버튼 클릭 이벤트
+		$("#addReplyBtn").on("click", function(e) {
+			modal.find("input").val(""); 						// 입력 창 비우기
+			modalInputReplyDate.closest("div").hide(); 			// 등록 날짜 입력 창 숨기기
+			//modal.find("button[id!=modalCloseBtn]").hide(); 	// 취소 버튼 제외 숨기기
+			modalModBtn.hide(); 								// 수정 버튼 숨기기
+			modalRemoveBtn.hide(); 								// 삭제 버튼 숨기기
+			modalRegisterBtn.show(); 							// 등록 버튼 보이기
+
+			$(".modal").modal("show"); // 모달 창 보이기
+		});
+
+		// (댓글 등록)취소 버튼 클릭 이벤트
+		$("#modalCloseBtn").on("click", function(e) {
+			$(".modal").modal("hide"); // 모달 창 숨김
+		});
+
+		// 댓글 등록버튼 눌리고 값 입력시
+		$("#modalRegisterBtn").on("click", function(e) {		// 댓글 등록 버튼 이벤트
+			replyService.add({
+				bno : bnoValue,
+				reply : modalInputReply.val(),
+				replyer : modalInputReplyer.val()
+			},
+			// 사용자가 입력한 값을 들고와서! 이 값을 등록하겠다!고 넣어준다. 
+			function(result) {
+				alert("결과?" + result);
+				showList(1);
+				
+				if (result == 'success') {		// success 되면 모달창 숨겨주고 페이지 새로고침하기 
+					$(".modal").modal("hide");	
+					// location.reload(); // 새로고침 효과. 근데 이렇게 하면 비동기 방식을 쓰는 이유가 없어짐. 이렇게 쓰지x
+				}
+			}
+
+			);
+		});
+	});
+
+	/* 
+	//
+		클릭 이벤트(on이든 클릭함수든 ) 걸기 
+		> 입력한 작성자, 내용 넣으려면  어디서 갖고 와서 넣는지 찾아서 쓰기 ! (dom 구조/html 통해서,,)
+	 */
+
+	// 어려우면 함수 다 넣어놓고 $.ajax 타게끔.. 그냥 다 때려넣어라 
+	/*
+	function add(reply) {
+		console.log("add reply....");
+	
+		$.ajax({
+			type : 'post',
+			url : '/replies/new',
+			data : JSON.stringify(reply),
+			contentType : "application/json; charset=utf-8",
+			success : function(result) {
+				alert("result : " + result);
+			},
+			error : function(xhr, status, er) {
+			}
+		});
+	}
+	add();
+	 */
+
+	// 던질 데이터 만들어준다 / 밑에는 json 방식
+	/*
+	replyService.add(		// 함수를. 부른다~. () 안에는 입력받을 데이터.
+			{bno:bnoValue, reply:'JS Test', replyer:'tester'},
+			function(result) {
+				alert("result : " + result);
+			}
+		); 	
+	
+	replyService.getList({bno : bnoValue, page : 1}, function(list) {
+
+		for(var i=0; i<list.length; i++){
+			console.log(list[i]);
+		}
+	});
+
+
+	replyService.remove(3, function(result) {
+
+		console.log(result);
+
+		if (result == 'success') {
+			alert("해당 댓글이 삭제됨!")
+		} else {
+			alert("댓글 삭제 실패")
+		}
+	});
+
+	 var sendData = {rno : 4, reply : "호주나ㅠㅠ 집 가구싶당 헝헝"};
+	replyService.update(sendData, function(result) {
+			alert("해당 댓글이 수정됨!");
+		}
+	);
+	
+	 */
+
+	/* replyService.get(4 , function(result) {
+		console.log(result);
+	}); */
+</script>
+<%@include file="../include/footer.jsp"%>

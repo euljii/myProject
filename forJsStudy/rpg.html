@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="inputHero">
+        <h3>주인공 이름을 입력하세요 : </h3>
+        <input type="text" id="hero">
+        <button id="strt">시작</button>
+    </div>
+    
+    <div id="selectMenu">
+        <span>액션을 선택하세요.</span>    
+        <button id="goAdvnt">모험</button>
+        <button id="goRest">휴식</button>
+        <button id="end">종료</button>
+    </div>
+    
+    <!-- 모험 클릭시 전투모드 -->
+    <div id="advnt">
+        <span>액션을 선택하세요.</span>    
+        <button id="goAttk">공격</button>
+        <button id="goHeal">회복</button>
+        <button id="goRun">도망</button>
+
+        
+        <h5>주인공 레벨</h5>
+        <span id="heroLv"></span>
+
+        <h5>주인공 체력</h5>
+        <span id="heroHp"></span>/
+        <span id="heroHpFull"></span>
+        <h5>주인공 경험치</h5>
+        <span id="heroXp"></span>/
+        <span id="heroXpFull"></span>
+        
+        <span id="monsterName"></span>
+        <h5>몬스터 체력</h5>
+        <span id="monsterHp"></span>/
+        <span id="monsterHpFull"></span>
+        
+        <br>
+        <h5>게임 로그</h5>
+        <span id="gameLog"></span>
+    </div>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+crossorigin="anonymous"></script> -->
+<script>
+
+// 변수 선언
+// div 변수 선언
+let inputHeroDiv = document.getElementById("inputHero");
+let selectMenuDiv = document.getElementById("selectMenu");
+let advntDiv = document.getElementById("advnt");
+
+// btn 변수 선언
+let heroClickBtn = document.getElementById("strt");     // 주인공 생성 및 시작
+let selectMenuBtn = document.getElementById("selectMenu");     // 메뉴 입력
+
+// btn 변수 선언 - 메뉴 입력
+let goAdvntBtn = document.getElementById("goAdvnt");    // 메뉴 입력 - 모험
+let goRestBtn = document.getElementById("goRest");      // 메뉴 입력 - 휴식
+let endBtn = document.getElementById("end");            // 메뉴 입력 - 종료
+
+// btn 변수 선언 - 메뉴 입력
+let goAttkBtn = document.getElementById("goAttk");      // 전투 모드 - 공격
+let goHealBtn = document.getElementById("goHeal");      // 전투 모드 - 휴식
+let goRunBtn = document.getElementById("goRun");       // 전투 모드 - 도망
+
+// 게임 로그
+let addLog;
+let gameLog = document.getElementById("gameLog");     // 스토리
+
+// 주인공 선언
+let hero = document.getElementById("hero");
+// 주인공 hp
+let heroHp = document.getElementById("heroHp");
+let heroHpFull = document.getElementById("heroHpFull");
+// 주인공 xp
+let heroXp = document.getElementById("heroXp");
+let heroXpFull = document.getElementById("heroXpFull");
+// 주인공 lv, 공격력 - 레벨 +1당 +10
+let heroLv = document.getElementById("heroLv");
+let heroAttk;  
+
+// 몬스터
+let monsterName = document.getElementById("monsterName");
+let monsterHp = document.getElementById("monsterHp");
+let monsterHpFull = document.getElementById("monsterHpFull");
+
+let theMonster; // 이번 라운드에 주인공이랑 싸울 몬스터
+
+// 몬스터 객체 생성
+class Monster {
+    constructor (name, hp, attk){
+        this.name = name;
+        this.hp = hp;
+        this.attk = attk;
+
+        // 화면 렌더링
+        monsterHp.innerHTML = this.hp;
+        monsterHpFull.innerHTML = this.hp;
+    } 
+    
+    // 전투모드 - 공격
+    monsterAttk(){
+        // 몬스터 체력을 내 공격력만큼 감소 (내가 공격)
+        monsterHp.innerHTML -= heroAttk;    // 공격
+        hpCheck(monsterHp);
+        dieCheck();
+        
+        // 게임로그 
+        addLog 
+        = `${hero.value}가 ${this.name}을 ${heroAttk}만큼 공격했습니다. <br/>`
+        + `${hero.value} : ${heroHp.innerHTML}, ${this.name} : ${monsterHp.innerHTML} <br/>`;
+        console.log('로그: ' + addLog);
+        gameLog.innerHTML += addLog;
+        
+        // 내 체력을 몬스터 공격력 만큼 감소 (공격 받기)
+        heroHp.innerHTML -= this.attk;
+        hpCheck(heroHp);
+        dieCheck();
+
+        addLog 
+            =  `${hero.value}가 ${this.name}로부터 ${this.attk}만큼 공격받았습니다. <br/>`
+            + `${hero.value} : ${heroHp.innerHTML}, ${this.name} : ${monsterHp.innerHTML} <br/>` ;
+        console.log('로그: ' + addLog);
+        gameLog.innerHTML += addLog;
+    }
+    
+    // 전투모드 - 회복
+    monsterHeal(){
+        // 내 체력을 10만큼 회복
+        heroHp.innerHTML = Number(heroHp.innerHTML) + 10;
+
+        // 만약 체력이 최대한도 달하면 최대한도로 맞추기
+        if(heroHp.innerHTML >= heroHpFull.innerHTML){
+            heroHp.innerHTML = heroHpFull.innerHTML;
+        }
+        addLog 
+            = `${hero.value}가 체력을 10 회복합니다. <br/>`
+            + `${hero.value} : ${heroHp.innerHTML}, ${this.name} : ${monsterHp.innerHTML} <br/>` ;
+        console.log('로그: ' + addLog);
+        gameLog.innerHTML += addLog;
+        
+        // 내 체력을 적 몬스터 공격력 만큼 감소
+        heroHp.innerHTML = Number(heroHp.innerHTML) - this.attk;
+        hpCheck(heroHp);
+        
+        addLog 
+            = `${hero.value}가 ${this.name}로부터 ${this.attk}만큼 공격받았습니다. <br/>`
+            + `${hero.value} : ${heroHp.innerHTML}, ${this.name} : ${monsterHp.innerHTML} <br/>` ;
+        console.log('로그: ' + addLog);
+        gameLog.innerHTML += addLog;
+
+
+    }
+}
+
+
+// window.onload - 주인공 입력 div 제외 다 hide
+window.addEventListener("load", function(){
+    inputHeroDiv.style.display="";
+    selectMenuDiv.style.display="none";
+    advntDiv.style.display="none";
+
+    // 첫판 hp 30, xp 30 (hp는 몬스터별 감소, xp는 몬스터 킬할 때마다 +10)
+    heroHp.innerHTML = 30;
+    heroHpFull.innerHTML = 30;
+
+    heroXp.innerHTML = 0;
+    heroXpFull.innerHTML = 30;
+
+    heroLv.innerHTML = 1;
+    // 주인공 공격력
+    heroAttk = heroLv.innerHTML*7;
+
+    gameLog.innerHTML = '게임을 시작합니다.';
+})
+
+
+// 주인공 이름 입력btn 온클릭
+heroClickBtn.addEventListener("click", function(){
+    addLog = `주인공은 ${hero.value}!!! <br/>`;
+    console.log('로그: '+addLog);
+    gameLog.innerHTML += addLog;
+    
+    // 메뉴 입력 - div 가리고 나타내기
+    inputHeroDiv.style.display="none";
+    selectMenuDiv.style.display="";
+    advntDiv.style.display="none";
+})
+
+// 메뉴 입력 - 모험 온클릭
+goAdvntBtn.addEventListener("click", function(){
+    
+    // 모험모드
+    inputHeroDiv.style.display="none";
+    selectMenuDiv.style.display="none";
+    advntDiv.style.display="";
+    
+    // 적 만들어두기 - 객체 생성 
+    const gorilla = new Monster('고릴라', 20, 8);
+    const monkey = new Monster('원숭이', 25, 5);
+    const rabbit = new Monster('토깽이', 13, 3);
+    
+    const monsterArr = [gorilla, monkey, rabbit];
+    
+    // 적 랜덤 뽑기(Math.random)
+    theMonster = monsterArr[Math.floor(Math.random()*3)];
+    console.log(`몬스터 이름 : ${theMonster.name}, 몬스터 정보 : ${JSON.stringify(theMonster)}`);
+
+
+    // !! 전투 모드 시작 !!
+    // 공격btn
+    goAttkBtn.addEventListener("click", function(){
+        theMonster.monsterAttk();
+
+    })
+    
+    // 회복btn
+    goHealBtn.addEventListener("click", function(){
+        theMonster.monsterHeal();
+    })
+    
+    // 도망btn
+    goRunBtn.addEventListener("click", function(){
+        inputHeroDiv.style.display="none";
+        selectMenuDiv.style.display="";
+        advntDiv.style.display="none";
+    })
+
+
+})    
+
+
+// 주인공&몬스터 사망 체크
+let dieCheck = function(){
+    
+    // 주인공 사망
+    if(heroHp.innerHTML <= 0){
+        addLog = `${hero.value}는 죽었습니다. 게임을 다시 시작하세요. <br/>`;
+        gameLog.innerHTML += addLog;
+    }
+    
+    // 몬스터 사망
+    if(monsterHp.innerHTML <= 0){
+        addLog = `${theMonster.name}가 죽었습니다. 주인공이 ${Number(heroLv.innerHTML)+1}로 레벨업합니다. <br/>`;
+        gameLog.innerHTML += addLog;
+        heroLv.innerHTML = Number(heroLv.innerHTML) + 1 ; 
+
+        // hp xp 충전
+        heroHpFull.innerHTML = Number(heroHpFull.innerHTML) + 15;   // 15 추가 (첫판은 30)
+        heroHp.innerHTML = heroHpFull.innerHTML; // 충전
+
+        heroXp.innerHTML = Number(heroXp.innerHTML) + 10;   // 한판 잡을 때 10 추가
+        // 나중에 몬스터별로 경험치 다르게 적용할 예정 :)
+    }
+
+};
+
+// 사망 체크
+let hpCheck = function(hp){
+    if(hp.innerHTML <= 0){
+        hp.innerHTML = 0;
+    }
+}
+
+
+</script>    
+</body>
+
+
+</html>

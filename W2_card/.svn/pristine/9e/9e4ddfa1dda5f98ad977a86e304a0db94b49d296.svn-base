@@ -1,0 +1,22 @@
+package com.sunrise.card.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sunrise.card.dao.CardDao;
+import com.sunrise.card.vo.CardVO;
+
+@Service("cService")
+public class CardServiceImpl implements CardService {
+	
+	@Autowired
+	private CardDao cDao; 
+	
+//	@Override
+//	public List<CardVO> cardList(){
+//		List<CardVO> list = bDao.cardList();
+//		return list;
+//	}
+}

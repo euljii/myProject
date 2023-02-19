@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.eulji.mapper.accountMapper">
+
+	
+	<insert id="join">
+	insert into memberTbl (idx, id, pw, nickname, name, birth, gender, email, pnum, intro, mbti, regDate, img, auth)
+		values (seq_memberTbl.nextval, #{id}, #{pw}, #{nickname},  #{name}, #{birth}, #{gender}, #{email}, #{pnum}, 
+		#{intro}, #{mbti}, sysdate, #{img}, '회원')
+	</insert>
+	
+</mapper>

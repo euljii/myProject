@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+	*{
+	margin: 0px;
+	padding: 0px;
+	}
+	 
+	#mail_check_input_box_true{
+	    background-color:white;
+	}
+	.correct{
+	    color : #28c3a5;
+	}
+	.incorrect{
+	    color : red;
+	}
+	#userinfo{
+		border-collapse: collapse;
+	}
+	#userinfo td{
+		height: 100%;
+		padding: 10px 0px 10px 0px;
+	}
+	#userinfo input[type=text]{
+		padding-left: 10px;
+		padding-right: 10px;
+		width: 225px;
+		height: 30px;
+		border-radius: 3px;
+		font-size: 15px;
+	}
+	#userinfo input[type=password]{
+		padding-left: 10px;
+		padding-right: 10px;
+		width: 225px;
+		height: 30px;
+		border-radius: 3px;
+		font-size: 14px;
+	}
+	#userinfo input[type=radio]{
+		width: 17px;
+		height: 17px;
+		padding: 10px;
+	}
+	label {
+		font-size: 17px;	
+	}
+	.obj{
+		width: 220px;
+	}
+	
+	.inputinfo{
+		width: 275px;
+	}
+	.joinbtn {
+		background: #41d4b8;
+		color: #fff;
+		border-radius: 5px;
+		padding: 7px 15px;
+		text-align: center;
+		border: none;
+		width: 300px;
+		height: 55px;
+		font-size: 23px;
+		font-weight: bold;
+	}
+	.joinbtn:hover {
+		background: #28c3a5;
+		transition: all 0.5s ease-in-out;
+	}

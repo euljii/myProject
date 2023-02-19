@@ -1,0 +1,9 @@
+package com.sunrise.card.dao;
+
+import java.util.List;
+
+import com.sunrise.card.vo.CardVO;
+
+public interface CardDao {
+//	List<CardVO> cardList();
+}

@@ -1,0 +1,76 @@
+package org.joonzis.mapper;
+
+import java.util.List;
+
+import org.joonzis.domain.test_memberVO;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+public class test_memberMapperTests {
+
+	@Setter(onMethod_ = @Autowired)	// 컨테이너에 있는 객체를 롬복 이용해서 세터로 들고오겠다
+	test_memberMapper mapper; 			// 갖고 올 객체
+
+	/*
+	// 데이터 삽입
+	@Test
+	public void testInsert() {
+		test_memberVO vo = new test_memberVO();
+		vo.setMcode(1);
+		vo.setMname("을지");
+		vo.setMid("eulji");
+		vo.setMpw("1234");
+		vo.setMage(27);
+		
+		mapper.test_insert(vo);
+		
+		log.info(vo);
+	}
+	
+	// 데이터 조회
+	@Test
+	public void testSelect() {
+		List<test_memberVO> list = mapper.test_select();
+	  	for(test_memberVO vo : list) { 
+	  		log.info("조회 결과 : " + vo);		// 정보전달의 목적 
+	  		} 
+	  	}
+	
+	// 데이터 수정
+	@Test
+	public void testUpdate() {
+		long bno = 6;
+		test_memberVO vo = new test_memberVO();
+		vo.setMcode(1);
+		vo.setMname("킹구");
+		vo.setMid("kinggu");
+		vo.setMpw("12345");
+		vo.setMage(47);
+		
+		mapper.test_update(vo);
+		log.info("업데이트 결과 : " + vo);
+	}
+	
+	 */
+
+	// 데이터 삭제
+	@Test
+	public void testDelete() {				// 성공!!
+		test_memberVO vo = new test_memberVO();
+		int mcode = 1;
+		int result = mapper.test_delete(mcode);
+		
+		log.info("삭제 결과 : " + result);
+		System.out.println(vo);
+	}
+
+}

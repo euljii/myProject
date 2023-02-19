@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Card">
+
+	<select id="cardList" resultType="com.sunrise.card.vo.CardVO">
+		select * from RCVAPPL
+	</select>
+	
+	<!-- 공통코드 들고오기 - 신청구분 -->
+	<select id="applClasList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C007'
+	</select>
+	
+	<!-- 공통코드 들고오기 - 브랜드 -->
+	<select id="brdList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C004'
+	</select>
+
+	<!-- 공통코드 들고오기 - 결제일자 -->
+	<select id="stlDdList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C009'
+	</select>
+
+	<!-- 공통코드 들고오기 - 결제방법 -->
+	<select id="stlMtdList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C002'
+	</select>
+	
+	<!-- 공통코드 들고오기 - 결제은행 -->
+	<select id="bnkCdList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C003'
+	</select>
+	
+	<!-- 공통코드 들고오기 - 청구서 발송 방법 -->
+	<select id="stmtSndMtdList" resultType="com.sunrise.card.vo.CommCodeDtlVO">
+		select * from COMM_CODE_DTL where GROUP_CD='C006'
+	</select>
+	
+	<!--  -->
+	<!-- 카드번호 시퀀스 -->
+	<select id="crdNoSeq" resultType="String" parameterType="String">
+		select SEQ_CRD_NO.nextval from dual
+	</select>	
+		
+	<!-- 고객번호 시퀀스 -->
+	<select id="custNoSeq" resultType="String" parameterType="String">
+		select SEQ_CUST_NO.nextval from dual
+	</select>	
+		
+		
+	<!--  -->
+	<!--  -->
+	<!-- 최초신규 -->
+	<!-- insert - rcvappl  -->
+	<insert id="rcvApplInsert" parameterType="com.sunrise.card.vo.RcvApplVO">
+		insert into RCVAPPL  (SSN, RCV_D, RCV_SEQ_NO, BIRTH_D, APPL_D, HG_NM, ENG_NM, 
+		STL_MTD, STL_ACT, BNK_CD, STL_DD, APPL_CLAS, STMT_SND_MTD, BILLADR_ADR1, BILLADR_ADR2,
+		BILLADR_ZIP, HDP_NO, BRD, SCRT_NO, EMAIL_ADR, CRD_NO, IMPSB_CLAS, IMPSB_CD, LST_OPR_TM, LST_OPR_D
+		)values(
+		#{SSN}, sysdate, seq_rcv_seq_no.nextval, #{BIRTH_D}, sysdate, #{HG_NM}, #{ENG_NM},
+		#{STL_MTD}, #{STL_ACT}, #{BNK_CD}, #{STL_DD}, #{APPL_CLAS}, 
+		#{STMT_SND_MTD}, #{BILLADR_ADR1}, #{BILLADR_ADR2}, #{BILLADR_ZIP}, #{HDP_NO}, #{BRD},
+		#{SCRT_NO}, #{EMAIL_ADR}, #{CRD_NO}, #{IMPSB_CLAS}, #{IMPSB_CD}, 
+		(select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+
+	<!-- insert - cust  -->
+	<insert id="custInsert" parameterType="com.sunrise.card.vo.CustVO">
+		insert into CUST (CUST_NO, SSN, REG_D, HG_NM, BIRTH_D, HDP_NO, LST_OPR_TM, LST_OPR_D)
+		values
+		(#{CUST_NO}, #{SSN}, SYSDATE, #{HG_NM}, #{BIRTH_D}, #{HDP_NO}, 
+		(select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+	
+	<!-- custNo 들고오기 -->
+	<select id="getCustNo" resultType="String"
+		parameterType="com.sunrise.card.vo.CustVO">
+		select CUST_NO from (select * from CUST where SSN = #{SSN})
+		where ROWNUM = 1
+	</select>
+	
+	<!-- insert - bill  -->
+	<insert id="billInsert" parameterType="com.sunrise.card.vo.BillVO">
+		insert into bill (
+			CUST_NO, STL_ACT, BNK_CD, DPS_NM, STL_MTD, STL_DD, PRCS_CLAS, STMT_SND_MTD, STMT_DENI_CLAS,
+			BILL_ZIP, BILL_ADR1, BILL_ADR2, EMAIL_ADR, LST_OPR_TM, LST_OPR_D)
+		values
+		(#{CUST_NO}, #{STL_ACT}, #{BNK_CD},	#{HG_NM}, #{STL_MTD}, #{STL_DD}, '1',
+		#{STMT_SND_MTD}, #{STMT_DENI_CLAS, jdbcType=VARCHAR}, #{BILLADR_ZIP, jdbcType=VARCHAR}, 
+		#{BILLADR_ADR1, jdbcType=VARCHAR}, #{BILLADR_ADR2, jdbcType=VARCHAR}, #{EMAIL_ADR, jdbcType=VARCHAR}, 
+		(select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+	
+	<!-- insert - crd -->
+	<insert id="crdInsert" parameterType="com.sunrise.card.vo.CrdVO">
+		insert into CRD (CRD_NO, CUST_NO, REG_D, SSN, VLD_DUR, BRD, SCRT_NO, ENG_NM, BF_CRD_NO, LST_CRD_F,
+			FST_REG_D, CRD_GRD, LST_OPR_TM, LST_OPR_D)
+		values
+			(#{CRD_NO}, #{CUST_NO}, SYSDATE, #{SSN}, TO_CHAR(SYSDATE+INTERVAL '5' YEAR,'YYYYMM'),
+			#{BRD}, #{SCRT_NO}, #{ENG_NM}, 
+			(select CRD_NO from CRD where CUST_NO=#{CUST_NO}), '1', SYSDATE,
+			'1', (select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+
+	<!-- 조회 ; 일단 주민번호만-->
+	<select id="selectBtn" resultType="com.sunrise.card.vo.RcvApplVO"
+		parameterType="com.sunrise.card.vo.RcvApplVO">
+		select * from (select * from RCVAPPL where SSN = #{SSN, jdbcType=VARCHAR} or 
+		RCV_SEQ_NO = #{RCV_SEQ_NO, jdbcType=VARCHAR} or rcv_d = #{RCV_D, jdbcType=VARCHAR}) 
+		where ROWNUM = 1		
+	</select>
+	
+	<!-- 조회 ; crd tbl -->
+	<select id="selectCrdVO" resultType="com.sunrise.card.vo.CrdVO"
+		parameterType="com.sunrise.card.vo.CrdVO">
+		select * from (select * from CRD where CRD_NO = #{CRD_NO})
+		where ROWNUM = 1
+	</select>
+	
+	<!--  -->
+	<!--  -->
+	<!-- 추가신규 insert - rcvappl -->
+	<!-- ej) 카드는 컨트롤러에서 입력하도록 나중에 수정 -->
+	<insert id="rcvInsertAdd" parameterType="com.sunrise.card.vo.RcvApplVO">
+		insert into RCVAPPL  (SSN, RCV_D, RCV_SEQ_NO, APPL_D, BIRTH_D, HG_NM, ENG_NM, 
+		STL_MTD, STL_ACT, BNK_CD, STL_DD, APPL_CLAS, STMT_SND_MTD, BILLADR_ADR1, BILLADR_ADR2,
+		BILLADR_ZIP, HDP_NO, BRD, SCRT_NO, EMAIL_ADR, CRD_NO, IMPSB_CLAS, IMPSB_CD, LST_OPR_TM, LST_OPR_D
+		)
+		values(
+		#{SSN}, SYSDATE, seq_rcv_seq_no.nextval, SYSDATE, #{BIRTH_D}, #{HG_NM}, #{ENG_NM},
+		#{STL_MTD}, #{STL_ACT}, #{BNK_CD}, #{STL_DD}, #{APPL_CLAS}, #{STMT_SND_MTD},
+		#{BILLADR_ADR1}, #{BILLADR_ADR2}, #{BILLADR_ZIP}, #{HDP_NO}, #{BRD},
+		#{SCRT_NO}, #{EMAIL_ADR}, #{CRD_NO}, #{IMPSB_CLAS}, #{IMPSB_CD},
+		(select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+
+	<!-- 추가신규 insert - crd -->
+	<!-- ej) LST_CRD_NO; 최종카드여부 수정 必/ 일단 무조건 1로 들어가게 해놓음 -->
+	<insert id="crdInsertAdd" parameterType="com.sunrise.card.vo.CrdVO">
+		insert into CRD (CRD_NO, CUST_NO, REG_D, SSN, VLD_DUR, BRD, SCRT_NO, ENG_NM,  
+		LST_CRD_F, FST_REG_D, CRD_GRD, LST_OPR_TM, LST_OPR_D)
+		values
+		(#{CRD_NO}, #{CUST_NO}, SYSDATE, #{SSN}, TO_CHAR(SYSDATE+INTERVAL '5' YEAR,'YYYYMM'), 
+		#{BRD}, #{SCRT_NO}, #{ENG_NM}, '1', SYSDATE,
+		'1', (select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+
+	<!--  -->
+	<!--  -->
+	<!-- 재발급 insert - rcvappl -->
+	<insert id="rcvInsertReAdd" parameterType="com.sunrise.card.vo.RcvApplVO">
+		insert into RCVAPPL (SSN, RCV_D, RCV_SEQ_NO, BIRTH_D, APPL_D, HG_NM, ENG_NM, 
+		STL_MTD, STL_ACT, BNK_CD, STL_DD, APPL_CLAS, STMT_SND_MTD, BILLADR_ADR1, BILLADR_ADR2,
+		BILLADR_ZIP, HDP_NO, BRD, SCRT_NO, EMAIL_ADR, CRD_NO, IMPSB_CLAS, IMPSB_CD, LST_OPR_TM, LST_OPR_D
+		)
+		values(
+		#{SSN}, SYSDATE, seq_rcv_seq_no.nextval, #{BIRTH_D}, SYSDATE, #{HG_NM}, #{ENG_NM},
+		#{STL_MTD}, #{STL_ACT}, #{BNK_CD}, #{STL_DD}, #{APPL_CLAS}, #{STMT_SND_MTD},
+		#{BILLADR_ADR1}, #{BILLADR_ADR2}, #{BILLADR_ZIP}, #{HDP_NO}, #{BRD},
+		#{SCRT_NO}, #{EMAIL_ADR}, #{CRD_NO}, #{IMPSB_CLAS}, #{IMPSB_CD},
+		(select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+	
+	<!-- 재발급 insert - crd / 재발급할 카드 -->
+	<insert id="crdInsertReAdd" parameterType="com.sunrise.card.vo.CrdVO">
+		insert into CRD (CRD_NO, CUST_NO, REG_D, SSN, VLD_DUR, BRD, SCRT_NO, ENG_NM, BF_CRD_NO, 
+		LST_CRD_F, FST_REG_D, CRD_GRD, LST_OPR_TM, LST_OPR_D)
+		values
+		(#{CRD_NO}, #{CUST_NO}, SYSDATE, #{SSN}, TO_CHAR(SYSDATE+INTERVAL '5' YEAR,'YYYYMM'), 
+		#{BRD}, #{SCRT_NO}, #{ENG_NM}, 
+		(select CRD_NO from CRD where BRD=#{BRD} and CUST_NO=#{CUST_NO}), '1', SYSDATE,
+		'1', (select to_char(systimestamp, 'HH24:MI') from dual), SYSDATE )
+	</insert>
+	
+	<!-- update할 crd select -->
+	<!-- 주민번호,브랜드,최종카드구분"1"로 카드테이블 select 하여 해당고객의 동일 브랜드의 카드 소지여부 확인 -->
+	<select id="originCrd" resultType="com.sunrise.card.vo.CrdVO"
+		parameterType="com.sunrise.card.vo.CrdVO">
+		select * from(
+			select * from CRD where SSN=#{SSN} and 
+			BRD = #{BRD} and
+			LST_CRD_F='1'
+	        order by LST_OPR_D DESC, LST_OPR_TM DESC)
+		where ROWNUM = 1
+	</select>
+	
+	<!-- 재발급 update - crd / 정지된 이전 카드 -->
+	<update id="originCardUpd" parameterType="com.sunrise.card.vo.CrdVO">
+		update CRD set LST_CRD_F = ''
+	</update>
+
+	<!--  -->	
+	<!--  -->	
+	<!--  -->	
+	<!-- 불능처리  -->
+	
+	<!-- 오늘 date 뽑기 -->
+	<select id="getTodaysDate">
+		select sysdate from dual
+	</select>
+
+</mapper>

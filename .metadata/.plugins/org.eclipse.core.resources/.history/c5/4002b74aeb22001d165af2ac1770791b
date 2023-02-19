@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>로그인페이지</h1>
+	<form name="frm_board" method="post" action="/W1_board/login" >
+		<table id="tbl_userInfo">
+			<tr>
+				<td>id</td>
+				<td><input type="text" name="USER_ID" placeholder="ID"></td>
+			</tr>
+			<tr>
+				<td>pw</td>
+				<td><input type="password" name="USER_PW" placeholder="Password"></td>
+			</tr>
+		</table>
+	</form>
+	<button id="btn_login">login</button>
+</body>
+<style>
+	td{
+	border-style: 1px solid black}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+
+	$(function() {
+
+		var frm_board = $("#frm_board");
+		
+		$("#btn_login").click(function() {
+			
+			var USER_ID = $("input[name='USER_ID']").val();
+			var USER_PW = $("input[name='USER_PW']").val();
+
+			if(USER_ID==''){
+				alert("아이디를 입력해주세요.");
+				return;
+			}else if(USER_PW==''){
+				alert("패스워드를 입력해주세요.");
+				return;
+			else{
+				frm_board.submit();
+			}
+		});
+	});
+	
+</script>
+</html>

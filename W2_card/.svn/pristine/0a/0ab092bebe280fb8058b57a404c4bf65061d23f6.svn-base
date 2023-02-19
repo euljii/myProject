@@ -1,0 +1,92 @@
+package com.sunrise.card.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.sunrise.card.vo.BillVO;
+import com.sunrise.card.vo.CommCodeDtlVO;
+import com.sunrise.card.vo.CrdVO;
+import com.sunrise.card.vo.CustVO;
+import com.sunrise.card.vo.RcvApplVO;
+
+@Repository("cDao")
+public class CardDaoImpl implements CardDao {
+	@Autowired
+	SqlSession sqlSession;
+
+	@Override
+	public List<CommCodeDtlVO> applClasList() {
+		return sqlSession.selectList("applClasList");
+	}
+
+	@Override
+	public List<CommCodeDtlVO> brdList() {
+		return sqlSession.selectList("brdList");
+	}
+
+	@Override
+	public List<CommCodeDtlVO> stlDdList() {
+		return sqlSession.selectList("stlDdList");
+	}
+			
+	@Override
+	public List<CommCodeDtlVO> stlMtdList() {
+		return sqlSession.selectList("stlMtdList");
+	}
+
+	@Override
+	public List<CommCodeDtlVO> bnkCdList() {
+		return sqlSession.selectList("bnkCdList");
+	}
+
+	@Override
+	public List<CommCodeDtlVO> stmtSndMtdList() {
+		return sqlSession.selectList("stmtSndMtdList");
+	}
+
+	@Override
+	public int rcvApplInsert(RcvApplVO rvo) {
+		return sqlSession.insert("rcvApplInsert", rvo);
+	}
+
+	@Override
+	public int custInsert(CustVO cvo) {
+		return sqlSession.insert("custInsert",cvo);
+	}
+
+	@Override
+	
+	public RcvApplVO getRvo(RcvApplVO rvo) {
+		return sqlSession.selectOne("getCrdNo", rvo);
+	}
+
+	@Override
+	public int crdInsert(CrdVO cdvo) {
+		return sqlSession.insert("crdInsert", cdvo);
+	}
+
+	@Override
+	public int billInsert(BillVO bvo) {
+		return sqlSession.insert("billInsert", bvo);
+	}
+
+	@Override
+	public CustVO getCvo(CustVO cvo) {
+		return sqlSession.selectOne("getCustNo", cvo);
+	}
+	
+	@Override
+	public RcvApplVO selectBtn(RcvApplVO rvo) {
+		return sqlSession.selectOne("selectBtn", rvo);
+	}
+
+//	@Override
+//	public List<CardVO> cardList() {
+//		return sqlSession.selectList("Board.cardList");
+//	}
+	
+	
+}
